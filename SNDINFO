@@ -1,0 +1,61 @@
+// Doom overrides
+misc/secret		    DBSECRET    // Found secret
+misc/w_pkup		    DSWPNUP		// Pickup weapon
+misc/gibbed         ZENEMDIE
+
+// Custom
+zelda/fanfare       ZFANFARE
+zelda/fairy         ZFAIRY
+zelda/sword_shoot   ZSWRDSHT
+zelda/sword_slash   ZSWRDSLA
+zelda/door          ZDOOR
+zelda/linkdie       ZLINKDIE
+zelda/e_die         ZENEMDIE    // Enemy die
+zelda/e_hit         ZENEMHIT    // Enemy hit
+zelda/stairs        DSSTAIRS    // Stairs
+zelda/heart         ZGETHART
+zelda/boss1         ZBOSS1
+zelda/boss2         ZBOSS2
+zelda/boss3         ZBOSS3
+zelda/bosshit       ZBOSSHIT
+$random zelda/boss { zelda/boss1 zelda/boss2 zelda/boss3 }
+
+zelda/tforce        ZTFORCE
+zelda/showitem      ZSHWITEM
+zelda/getitem       ZGETITEM
+zelda/rupee         ZRUPEE
+zelda/arrow         ARROBOOM
+zelda/bombdrop      BOMBDROP
+zelda/bombblow      BOMBBLOW
+zelda/candle        CANDLE
+zelda/wand          WANDSHOT
+zelda/whistle       RECORDER
+zelda/rupees        RUPEES
+zelda/rupee5        RUPEE5
+zelda/shield        ZSHIELD
+zelda/shore         ZSHORE
+zelda/warp          ZAPPEAR
+zelda/spike          ZSPIKE
+
+// Replace menu sounds
+menu/cursor			ZRUPEE		// Move cursor up/down
+menu/choose			BOMBDROP	// Choose a menu item
+menu/activate		ZSHWITEM	// Activate a new menu
+menu/backup			ARROBOOM	// Backup to previous menu
+menu/prompt			ARROBOOM	// Activate a prompt "menu"
+menu/change			ARROBOOM	// Select new value for option
+
+menu/invalid		BOMBBLOW	// Menu not available
+menu/dismiss		BOMBBLOW	// Dismiss a prompt message
+menu/clear		    BOMBBLOW	// Close top menu
+
+$random menu/quit1 { misc/gibbed zelda/boss1 zelda/boss2 zelda/boss3 }
+$random menu/quit2 { misc/gibbed zelda/boss1 zelda/boss2 zelda/boss3 }
+
+// Bow
+BOWREADY	BOWREADY
+ARROWNRM	ARROWNRM
+ARROWICE	ARROWICE
+IROWIMPC	IROWIMPC
+$limit IROWIMPC 0
+UNSPELL		UNSPELL

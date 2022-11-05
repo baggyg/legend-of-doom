@@ -1,0 +1,259 @@
+GameInfo
+{
+	PlayerClasses = "ZeldaPlayer"
+	StatusBarClass = "ZeldaHud"
+
+    TitlePage = "TITLEPIC"
+    CreditPage = "ZSTORY"
+    InfoPage = "Info"
+    TitleMusic = "ZTITLE"
+    CursorPic = "Cursor"
+	DrawReadThis = false
+    DimColor = "Black"
+    DimAmount = 0.95
+	BorderFlat = "Black"
+	QuitMessages = "Leave Hyrule in darkness?", "Let Ganon's rule unfold?", "Doom the princess?"
+
+	AddEventHandlers = "SpawnController"
+	AddEventHandlers = "UniqueItemController"
+	AddEventHandlers = "MoneyGameController"
+	AddEventHandlers = "MapController"
+	AddEventHandlers = "LootController"
+}
+
+Map MAP01 "Hyrule"
+{
+	Music = ZOVRWRLD
+	Sky1 = SKYWW
+	Cluster = 1
+	NoIntermission
+    F1 = HDMap
+}
+Map MAP02 "Eagle"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP1
+}
+Map MAP03 "Moon"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP2
+}
+Map MAP04 "Manji"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP3
+}
+Map MAP05 "Snake"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP4
+}
+Map MAP06 "Lizard"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP5
+}
+Map MAP07 "Dragon"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP6
+}
+Map MAP08 "Demon"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP7
+}
+Map MAP09 "Lion"
+{
+	Music = ZDUNGEON
+	Cluster = 1
+	NoIntermission
+    F1 = MAP8
+}
+Map MAP10 "Death Mountain"
+{
+	Music = ZDEATH
+	Cluster = 1
+    Next = endsequence, "Inter_ZeldaEnd"
+    NoIntermission
+    F1 = MAP9
+}
+Map TEST "TEST Mountain"
+{
+	Music = ZDEATH
+	Cluster = 1
+    Next = endsequence, "Inter_ZeldaEnd"
+    NoIntermission
+}
+
+clearepisodes
+
+Episode MAP01
+{
+    Name = "ZELDA DOOM"
+    Key = "Z"
+}
+
+Intermission Inter_ZeldaEnd
+{
+    Image
+    {
+        Time = 15
+        MUSIC = "ZEND"
+        Background = "ENDR"
+    }
+}
+
+DoomEdNums
+{
+	// Player
+	15001 = ZeldaPlayer
+
+	// Monsters
+	15030 = ZeldaSpawner
+	15070 = ZeldaManualSpawner
+	15080 = FireballSpawner
+	15090 = SpikeTrap
+	15100 = Bubble
+    15110 = ZeldaKillableFire
+    15120 = DungeonMan
+    15130 = ZeldaGhostSpawner
+
+	// Decorations
+	16010 = ZeldaTree
+	16020 = ZeldaFire
+	16030 = ZeldaBushGreen
+	16040 = ZeldaBushBrown
+	16050 = ZeldaFog
+	16060 = ZeldaTree2
+	16070 = MoneySpot
+	16080 = MoblinLootSpot
+    16090 = MoblinPaymentSpot
+    16100 = TornadoSpot
+    16110 = SecretRevealer
+    16120 = SecretBush
+    16130 = SecretBushBrown
+    16140 = SecretBushInvisible
+
+	// NPCs
+	17010 = ZeldaOldMan
+	17020 = ZeldaOldLady
+	17030 = ZeldaMerchant
+	17040 = ZeldaMoblinNpc
+	17050 = PrincessZelda
+
+	// Weapons
+	18020 = ZeldaSwordSilver
+	18030 = ZeldaSwordWood
+	18040 = ZeldaSwordMaster
+	18070 = Bow
+	18080 = Boomerang
+	18090 = BoomerangBlue
+	18005 = ZeldaBomb
+	18100 = ZeldaBombPickup
+	18110 = ZeldaWand
+	18120 = ZeldaWhistle
+
+	// Items
+	19000 = ZeldaFairy
+	19005 = ZeldaKey
+	19010 = ZeldaKeyPickup
+	19020 = ZeldaLetter
+	19030 = ZeldaRingBlue
+	19040 = ZeldaRingRed
+	19045 = ZeldaHeartContainer
+	19050 = ZeldaHeartContainerPickup
+	19060 = ZeldaSmallHeart
+	19065 = ZeldaSmallHeart10
+	19070 = ZeldaUniquePotion
+	19080 = ZeldaLadder
+	19090 = ZeldaRaft
+	19100 = ZeldaTriforce
+	19120 = ZeldaMap
+	19125 = ZeldaMapInvisible
+	19130 = ZeldaLionKey
+	19140 = ZeldaRupee
+	19150 = ZeldaRupee5
+	19160 = ZeldaRupee20
+	19170 = ZeldaClock
+	19180 = CandleRed
+	19190 = CandleBlueStore
+	19200 = ZeldaBook
+	19210 = ZeldaPowerBracelet
+	19220 = MoblinRupee30
+	19230 = MoblinRupee100
+	19240 = ZeldaMeat60
+	19245 = ZeldaMeat100
+	19250 = ZeldaKey100
+	19255 = ZeldaKey80
+	19260 = ZeldaShield90
+	19270 = ZeldaShield130
+	19280 = ZeldaShield160
+	19290 = ZeldaBomb20
+	19300 = ZeldaSilverArrow
+	19310 = StorePotionBlue
+	19320 = StorePotionRed
+    19330 = ZeldaMoreBomb
+}
+
+skill baby
+{
+	AutoUseHealth
+	AmmoFactor = 2
+	DamageFactor = 0.5
+	EasyBossBrain
+	SpawnFilter = Baby
+	Name = "Easiest"
+	Key = "i"
+}
+
+skill easy
+{
+	EasyBossBrain
+	SpawnFilter = Easy
+	Name = "Easy"
+	Key = "h"
+}
+
+skill normal
+{
+	SpawnFilter = Normal
+	Key = "h"
+	Name = "Normal"
+	DefaultSkill
+}
+
+skill hard
+{
+	SpawnFilter = Hard
+	Name = "Hard"
+	Key = "u"
+}
+
+skill nightmare
+{
+	AmmoFactor = 2
+	FastMonsters
+	InstantReaction
+	DisableCheats
+	RespawnTime = 12
+	SpawnFilter = Nightmare
+	Name = "Impossible"
+	MustConfirm
+	Key = "n"
+}

@@ -1,0 +1,143 @@
+#library "lod"
+#include "zcommon.acs"
+
+Script 1 ENTER
+{
+	Thing_ChangeTID(0, 1000 + PlayerNumber()); // This assigns the TID
+}
+
+// Travel between a dungeons and the overworld
+Script "HubTeleport" (int map, int startPoint, int isTriforce)
+{
+	if (isTriforce > 0)
+	{
+		Thing_Stop(1001);
+		SetPlayerProperty(1001, 1, PROP_FROZEN);
+        SetMusic("");
+		PlaySound(0, "zelda/tforce", CHAN_AUTO);
+		Delay(280);
+	}
+
+	PlaySound(0, "zelda/stairs", CHAN_AUTO);
+	Teleport_NewMap(map, startPoint, 1);
+	SetPlayerProperty(1001, 0, PROP_FROZEN);
+}
+
+Script "StairTeleport" (int destinationId)
+{
+	PlaySound(0, "zelda/stairs", CHAN_AUTO);
+	Teleport_NoFog(destinationId, 3);
+
+    // Music stops in caves
+    if (CheckActorFloorTexture(0, "BLACK"))
+    {
+        SetMusic("");
+    }
+    else
+    {
+        // Delay(25);
+        SetMusic("*", 0);
+    }
+}
+
+Script "NpcDialog" (int dialogItemId)
+{
+    // https://www.zeldadungeon.net/wiki/The_Legend_of_Zelda_Old_Man_Quotes
+	str dialog[36] =
+	{
+		"IT'S DANGEROUS TO GO ALONE! TAKE THIS.",		// 0
+		"TAKE ANY ONE YOU WANT.",						// 1
+		"IT'S A SECRET TO EVERYBODY.",					// 2
+		"SHOW THIS TO THE OLD WOMAN.",					// 3
+		"PAY ME FOR THE DOOR REPAIR CHARGE.",			// 4
+		"TAKE ANY ROAD YOU WANT.",						// 5
+		"GUMBLE, GRUMBLE...",							// 6
+		"DODONGO DISLIKES SMOKE",						// 7
+		"MASTER USING IT AND YOU CAN HAVE THIS.",		// 8
+		"LET'S PLAY THE MONEY MAKING GAME.",			// 9
+		"EASTMOST PENNINSULA IS THE SECRET.",			// 10
+		"DODONGO DISLIKES SMOKE.",						// 11
+		"DID YOU GET THE SWORD FROM THE OLD MAN ON TOP OF THE WATERFALL?",	// 12
+		"WALK INTO THE WATERFALL.",						// 13
+		"DIGDOGGER HATES CERTAIN KIND OF SOUND.",		// 14
+		"I BET YOU'D LIKE TO HAVE MORE BOMBS.",			// 15
+		"SECRET POWER IS SAID TO BE IN THE ARROW.",		// 16
+		"AIM AT THE EYES OF GOHMA.",					// 17
+		"PAY ME AND I'LL TALK",							// 18
+		"GO UP, UP, THE MOUNTAIN AHEAD.",				// 19
+		"BUY SOMTHIN' WILL YA.",						// 20
+		"BOY, THIS IS REALLY EXPENSIVE!",				// 21
+		"RIP AND TEAR UNTIL IT IS DONE",				// 22
+        "THERE ARE SECRETS WHERE FAIRIES DON'T LIVE.", 	// 23
+        "THERE'S A SECRET IN THE TIP OF THE NOSE.", 	// 24
+        "SPECTACLE ROCK IS AN ENTRANCE TO DEATH.",  	// 25
+        "10TH ENEMY HAS THE BOMB.",                 	// 26
+        "GO TO THE NEXT ROOM.",                     	// 27
+        "EYES OF SKULL HAS A SECRET.",              	// 28
+        "PATRA HAS THE MAP",                        	// 29
+        "ONES WHO DOES NOT HAVE TRIFORCE CAN'T GO IN.", // 30
+        "MEET THE OLD MAN AT THE GRAVE.", 				// 31
+		"GO NORTH, WEST, SOUTH, WEST TO THE FOREST OF MAZE.", // 32
+		"GIVE THIS TO THE OLD WOMAN.",					// 33
+		"BUY SOME MEDICINE BEFORE YOU GO.",				// 34
+		"SECRET IS IN THE TREE AT THE DEAD END."		// 35
+	};
+
+	str dialog2[36] =
+	{
+		"IT'S DANGEROUS TO GO ALONE! TAKE THIS.",		// 0
+		"TAKE ANY ONE YOU WANT.",						// 1
+		"IT'S A SECRET TO EVERYBODY.",					// 2
+		"SHOW THIS TO THE ELDERLY WOMAN.",				// 3
+		"YOU OWE FOR THE DOOR REPAIRS! NOW PAY UP!",    // 4
+		"CHOOSE YOUR PATH.",						    // 5
+		"GUMBLE, GRUMBLE...",							// 6
+		"DODONGOS HATE SMOKE",						    // 7
+		"BECOME STRONGER AND YOU SHALL HAVE THIS.",		// 8
+		"CARE TO PLAY A MONEY MAKING GAME?",			// 9
+		"SOUTH OF THE ARROW MARK HIDES GREAT WISDOM.",	// 10
+		"DODONGOS HATE SMOKE.",						    // 11
+		"DID YOU GET THE SWORD FROM THE OLD MAN ON TOP OF THE WATERFALL?",	// 12
+		"WALK INTO THE WATERFALL.",						// 13
+		"DIGDOGGERS LOATHE CERTAIN KINDS OF SOUND.",	// 14
+		"DO YOU WISH TO CARRY MORE BOMBS?", 			// 15
+		"FOLLOW THE ARROW MARK TO THE END, AND YOU SHAL FIND...",		    // 16
+		"AIM FOR THE EYE OF GOHMA.",					// 17
+		"I WON'T TALK FOR FREE!",						// 18
+		"GO WAY UP AHEAD ON THE MOUNTAIN.",     		// 19
+		"BUY SOMTHIN' WILL YA.",						// 20
+		"THIS HERE'S A GOOD VALUE AND WORTH BUYING.",	// 21
+		"RIP AND TEAR UNTIL IT IS DONE",				// 22
+        "WISDOM LIES UNDER A FAIRYLESS POND.", 	        // 23
+        "THERE'S A SECRET IN THE TIP OF THE NOSE.", 	// 24
+        "SPECTACLE ROCK IS A GATEWAY TO DEATH.",      	// 25
+        "10TH ENEMY HAS THE BOMB.",                 	// 26
+        "GO TO THE NEXT ROOM.",                     	// 27
+        "EYES OF SKULL HAS A SECRET.",              	// 28
+        "PATRA HAS THE MAP",                        	// 29
+        "ONES WHO DOES NOT HAVE TRIFORCE CAN'T GO IN.", // 30
+        "MEET THE OLD MAN AT THE GRAVEYARD, DEARIE.", 			// 31
+		"GO NORTH, WEST, SOUTH, AND WEST IN THE LOST WOODS.",   // 32
+		"SHOW THIS TO THE ELDERLY WOMAN.",					    // 33
+		"BUY MEDICINE AND BE ON YOUR WAY, DEARIE.",				// 34
+		"WISDOM LIES BENEATH A TREE AT A DEAD END."		        // 35
+	};
+
+	SetFont("ZeldFNT2");
+	HudMessageBold(s:dialog2[dialogItemId];
+		HUDMSG_PLAIN, 1, CR_WHITE, 0.5, 0.25, 5.0);
+}
+
+Script "ItemCheck" (int itemId, int lineId)
+{
+	str items [2] =
+	{
+		"ZeldaLadder",	// 0
+		"ZeldaRaft"		// 1
+	};
+
+	if (CheckInventory(items[itemId]))
+	{
+		SetLineBlocking(lineId, BLOCK_NOTHING);
+	}
+}

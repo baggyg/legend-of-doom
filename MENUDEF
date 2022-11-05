@@ -1,0 +1,59 @@
+DEFAULTLISTMENU
+{
+	// Font "ZeldFNT", "Untranslated"
+	Font "BigFont", "White"
+	Selector "M_SKULL1", -25, -10
+	Linespacing 16
+}
+
+LISTMENU "MainMenu"
+{
+	StaticPatch 110, 25, "M_DOOM"
+	Position 125, 100
+
+    TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
+    ifOption(SwapMenu)
+    {
+        TextItem  "$MNU_LOADGAME", "l", "LoadGameMenu", 0
+        TextItem  "$MNU_SAVEGAME", "s", "SaveGameMenu",0
+        TextItem  "$MNU_OPTIONS","o", "OptionsMenu", 0
+    }
+    else
+    {
+        TextItem  "$MNU_OPTIONS","o", "OptionsMenu", 0
+        TextItem  "$MNU_LOADGAME", "l", "LoadGameMenu", 0
+        TextItem  "$MNU_SAVEGAME", "s", "SaveGameMenu", 0
+    }
+    ifOption(ReadThis)
+    {
+        TextItem  "$MNU_INFO","r", "ReadThisMenu", 0
+    }
+    TextItem  "$MNU_QUITGAME", "q", "QuitMenu", 0
+}
+
+ListMenu "SkillMenu"
+{
+	Font "BigFont", "White"
+    StaticText 74, 16, "$MNU_CHOOSESKILL"
+    Position 160, 44
+    centermenu
+}
+
+ListMenu "EpisodeMenu"
+{
+	NetgameMessage "$NEWGAME"
+	Position 85, 63
+	StaticText 95, 38, "Choose Adventure"
+	// items will be filled in by MAPINFO
+}
+
+// //-------------------------------------------------------------------------------------------
+// //
+// // The option menu
+// //
+// //-------------------------------------------------------------------------------------------
+
+// OptionMenu "OptionsMenu"
+// {
+// 	Option "High Resolution Voxel Graphics",		"r_drawvoxels", "OnOff"
+// }

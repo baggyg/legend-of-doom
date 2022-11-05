@@ -1,0 +1,90 @@
+/////ICEARROW
+flickerlight MFROSTSHARD
+{
+    color 0.3 0.3 1.0
+    size 32
+    secondarySize 40
+    chance 0.3
+}
+flickerlight MFROSTSHARD_X1
+{
+    color 0.3 0.3 1.0
+    size 40
+    secondarySize 48
+    chance 0.3
+}
+flickerlight MFROSTSHARD_X2
+{
+    color 0.2 0.2 0.8
+    size 48
+    secondarySize 56
+    chance 0.3
+}
+flickerlight MFROSTSHARD_X3
+{
+    color 0.1 0.1 0.5
+    size 56
+    secondarySize 64
+    chance 0.3
+}
+flickerlight MFROSTSHARD_X4
+{
+    color 0.0 0.0 0.2
+    size 64
+    secondarySize 68
+    chance 0.3
+}
+object IceArrow
+{
+	frame ARR2 { light MFROSTSHARD }
+	frame SHEXA { light MFROSTSHARD_X1 }
+    frame SHEXB { light MFROSTSHARD_X2 }
+    frame SHEXC { light MFROSTSHARD_X3 }
+    frame SHEXD { light MFROSTSHARD_X4 }
+}
+
+
+// /////CANDLEFILE
+// flickerlight MFROSTSHARD
+// {
+//     color 0.3 0.3 1.0
+//     size 32
+//     secondarySize 40
+//     chance 0.3
+// }
+// flickerlight MFROSTSHARD_X1
+// {
+//     color 0.3 0.3 1.    0
+//     size 40
+//     secondarySize 48
+//     chance 0.3
+// }
+// flickerlight MFROSTSHARD_X2
+// {
+//     color 0.2 0.2 0.8
+//     size 48
+//     secondarySize 56
+//     chance 0.3
+// }
+// flickerlight MFROSTSHARD_X3
+// {
+//     color 0.1 0.1 0.5
+//     size 56
+//     secondarySize 64
+//     chance 0.3
+// }
+// flickerlight MFROSTSHARD_X4
+// {
+//     color 0.0 0.0 0.2
+//     size 64
+//     secondarySize 68
+//     chance 0.3
+// }
+// object IceArrow
+// {
+// 	frame ARR2 { light MFROSTSHARD }
+// 	frame SHEXA { light MFROSTSHARD_X1 }
+//     frame SHEXB { light MFROSTSHARD_X2 }
+//     frame SHEXC { light MFROSTSHARD_X3 }
+//     frame SHEXD { light MFROSTSHARD_X4 }
+// }

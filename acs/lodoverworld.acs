@@ -1,0 +1,181 @@
+#library "lodoverworld"
+
+#import "lod.acs"
+#include "zcommon.acs"
+
+// Queue to track player line crosses
+// when going through the lost woods.
+int lostWoodsSteps[3] = {0,0,0};
+
+Script "LostWoods" (int lineId)
+{
+	// 40=North 128 Teleporter
+	// 41=South 129
+	// 42=West  130
+	// N,W,S,W to pass
+
+	int destinationId;
+	if (lineId == 40)
+		destinationId = 129;
+	else if (lineId == 41)
+		destinationId = 128;
+	else if (lineId == 42)
+		destinationId = 130;
+
+	if (lostWoodsSteps[0] == 41 && lostWoodsSteps[1] == 42 && lostWoodsSteps[2] == 40 && lineId == 42)
+    {
+    	PlaySound(0, "misc/secret", CHAN_AUTO);
+		terminate;
+    }
+
+	lostWoodsSteps[2] = lostWoodsSteps[1];
+	lostWoodsSteps[1] = lostWoodsSteps[0];
+	lostWoodsSteps[0] = lineId;
+
+	Teleport_NoFog(destinationId, 3);
+}
+
+// Holds the ID for where players should be teleported
+// back to after they've been taken to a store area.
+int previousTravelId;
+
+// StairReturn/Travel are an attempt at a better
+// Stair Teleport so I can get rid of so many
+// secret rooms. Stair travel destinations
+// must use StairReturn
+Script "StairTravel" (int from, int to)
+{
+    // There are two old lady rooms, one empty and
+    // one with bottles for sale and the dialog trigger.
+    if (to == 12 && !CheckInventory("ZeldaLetter"))
+        to = 7;
+
+    // Remember where we came from
+    if (from > 0)
+        previousTravelId = from;
+
+	ACS_NamedExecute("StairTeleport", 0, to);
+}
+
+Script "StairReturn" (void)
+{
+	ACS_NamedExecute("StairTeleport", 0, previousTravelId);
+}
+
+// Called by SecretRevealer class
+Script "RevealSecret" (int lineId, int sectorId, int stairFlatId, int lineFlatId)
+{
+    // 4 special cases for power bracelet spots
+    if ((sectorId == 24 || sectorId == 28 || sectorId == 26 || sectorId == 27) && !CheckInventory("ZeldaPowerBracelet"))
+    {
+        Terminate;
+    }
+
+    str lineFlats[3] = { "-", "CAVEENT", "CAVEENTB" };
+    SetLineBlocking(lineId, BLOCK_NOTHING);
+    SetLineTexture(lineId, SIDE_FRONT, TEXTURE_MIDDLE, lineFlats[lineFlatId]);
+    SetLineTexture(lineId, SIDE_BACK, TEXTURE_MIDDLE, lineFlats[lineFlatId]);
+
+    PlaySound(0, "misc/secret", CHAN_AUTO);
+
+    if (sectorId > 0 && stairFlatId < 5)
+    {
+        // Sector damage is used to prevent spawning in a secret sector.
+        Sector_SetDamage(sectorId, 0, MOD_UNKNOWN);
+
+        // Create stairs.     Green,   White,   Brown    Ground
+        str stairFlats[4] = { "STRSG", "STRSW", "STRSB", "OGROUND" };
+        ChangeFloor(sectorId, stairFlats[stairFlatId]);
+
+        // Floor gets pushed down 8px on first reveal. Don't run again after.
+        if (GetSectorFloorZ(sectorId, 0, 0) != GetActorZ(0)) Terminate;
+    	Floor_RaiseByValue(sectorId, 10, -8);
+    }
+}
+
+Script "RevealPowerBracelet" (int linedefId, int sectorId)
+{
+	PlaySound(0, "misc/secret", CHAN_AUTO);
+	SetLineBlocking(linedefId, BLOCK_NOTHING);
+    SetLineTexture(linedefId, SIDE_FRONT, TEXTURE_MIDDLE, "-");
+    SetLineTexture(linedefId, SIDE_BACK, TEXTURE_MIDDLE, "-");
+    ChangeFloor(sectorId, "OGROUND");
+}
+
+Script "RevealLevel6" (void)
+{
+    ChangeFloor(21, "O-SND");
+    ChangeFloor(22, "STRSB");
+	SetLineBlocking(44, BLOCK_NOTHING);
+}
+
+// Used to track status of overworld
+// music with shore sounds.
+bool shorePlaying = false;
+
+Script "ToggleShoreMusic" (void)
+{
+	shorePlaying = !shorePlaying;
+
+	if (shorePlaying)
+	{
+    	PlaySound(0, "zelda/shore", CHAN_VOICE, 0.25, true);
+	}
+	else
+	{
+    	StopSound(0, CHAN_VOICE);
+	}
+}
+
+Script "MakeMoney" (int from)
+{
+    ScriptCall("MoneyGameController", "ResetGame");
+	ACS_NamedExecute("StairTravel", 0, from, 5);
+}
+
+Script "ShowPrice" (int lineId, int priceId)
+{
+	str priceTextures[4] = { "PRICE-40", "PRICE-10", "PRICE20", "PRICE50" };
+	SetLineTexture(lineId, SIDE_FRONT, TEXTURE_TOP, priceTextures[priceId]);
+}
+
+Script "ResetPrices" (void)
+{
+	SetLineTexture(50, SIDE_FRONT, TEXTURE_TOP, "PRICE-10");
+	SetLineTexture(51, SIDE_FRONT, TEXTURE_TOP, "PRICE-10");
+	SetLineTexture(52, SIDE_FRONT, TEXTURE_TOP, "PRICE-10");
+}
+
+Script "VisitMoblin" (int from, int lootId)
+{
+    ScriptCall("LootController", "SetLoot", from, lootId);
+	ACS_NamedExecute("StairTravel", 0, from, 20);
+}
+
+Script "PayOldMan" (int from)
+{
+    ScriptCall("LootController", "SetPayment", from);
+	ACS_NamedExecute("StairTravel", 0, from, 93);
+}
+
+Script "VisitOldMan" (int from, int dialogId)
+{
+	ACS_NamedExecute("NpcDialog", 0, dialogId);
+	ACS_NamedExecute("StairTravel", 0, from, 22);
+}
+
+Script "SpawnDude" (int spawnerId)
+{
+    ScriptCall("SpawnController", "TriggerSpawner", strparam(d:spawnerId));
+}
+
+Script "PlaySecretSound" (void)
+{
+    PlaySound(0, "misc/secret", CHAN_AUTO);
+}
+
+Script "ChangeSky" (int skyId)
+{
+	str sky[2] = { "SKYWW",	"SKYWW2" };
+	ChangeSky(sky[skyId], sky[skyId]);
+}

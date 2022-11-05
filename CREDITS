@@ -1,0 +1,120 @@
+/****************************************************
+*
+*   Credits
+*
+****************************************************/
+
+Conversion and code by DeTwelve
+
+https://ko-fi.com/detwelve
+
+Nintendo - for making the original Legend of Zelda
+
+The original LoZ isn't directly available for purchase, but is accessible on the Switch via Nintendo Online.
+
+https://www.zelda.com/
+
+id - for DOOM and everything they have done for the mod community and gaming in general.
+
+https://bethesda.net/en/game/doom
+
+
+/****************************************************
+*
+*   Modders and helpful people
+*
+****************************************************/
+
+Exkodius - for his inspirational work, kindly letting me use the Octorock sprites from Zelda TC, and helpful suggestions on menu improvements.
+
+Zoskiacu - for their work on Legend of Zeldoom. This helped inform decisions surrounding world scale.
+
+Kizoky - for allowing me to use his Eater of Worlds code for Moldorm and Lanmola.
+
+Dude27th - for testing and helpful suggestions.
+
+Amuscaria,XaserAcheron - for the sword and shield assets
+
+Evil Space Tomato - for the wand submitted to Realm667
+
+Gothic - for the bow and arrows submitted to Realm667
+
+HideousDestructor mod for weapons switching technique
+
+Apeirogon - for contributing a solution to getting sector tags on the zdoom forums.
+
+Jarewill - for posting boomerange projectile example on the forums.
+
+/****************************************************
+*
+*   Weapons Art
+*
+*   NOTES:
+*   Sword hilts were recolored and projectiles added.
+*
+****************************************************/
+
+Art By: Amuscaria
+Eriguns Mod By: XaserAcheron
+Source:
+https://forum.zdoom.org/viewtopic.php?f=43&t=48208&hilit=eriguns2
+https://github.com/XaserAcheron/eriguns/tree/master/eriguns2/sprites/weapons/templarsword
+
+*Bow as Bow and Arrow*
+
+Submitted: Gothic
+Decorate: Gothic
+GLDefs: Gothic
+Sprites: Bethesda Softworks, Raven Software, Monolith Productions, DonaldDuck
+Sprite Edit: Gothic
+Sounds: Raven Software
+
+*Fire crystal*
+
+Submitted: Evil Space Tomato
+Decorate: Evil Space Tomato
+GLDefs: Evil Space Tomato
+Sounds: Heretic Edited by Evil Space Tomato
+Sprites: neoworm http://forum.zdoom.org/viewtopic.php?f=37&t=15908
+Sprite Edit: Evil Space Tomato
+
+*Magic Shield*
+
+Art from
+https://forum.zdoom.org/viewtopic.php?f=43&t=68869&p=1154715&hilit=wooden+shield+sprite#p1154715
+
+
+/****************************************************
+*
+*   Legend of Zelda
+*
+****************************************************/
+SoundFx
+http://noproblo.dayjo.org/ZeldaSounds/
+
+Character and item sprites ripped by Mister Mike
+https://www.spriters-resource.com/nes/legendofzelda
+
+Reference Maps
+https://nesmaps.com/maps/Zelda/Zelda.html
+
+Other references
+https://www.zeldadungeon.net/
+
+Skybox texture:
+https://new.tcrf.net/The_Legend_of_Zelda:_The_Wind_Waker/Unused_Models#Tincle
+
+
+/****************************************************
+*
+*   Tools
+*
+****************************************************/
+
+*Ultimate Doom Builder*
+https://github.com/jewalky/UltimateDoomBuilder
+
+*ZScript VSCode extension*
+https://github.com/KaptainMicila/ZScript-VSCode
+
+*Adobe Photoshop*

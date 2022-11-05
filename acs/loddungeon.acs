@@ -1,0 +1,135 @@
+#library "loddungeon"
+
+#import "lod.acs"
+#include "zcommon.acs"
+
+// Individual dungeon map scripts
+// set these values for itself.
+global str 1:openDoorTexture;
+global str 2:openBombTexture;
+global str 3:closeDoorTexture;
+global str 4:stairTexture;
+global str 5:floorTexture;
+global int 6:startX;
+global int 7:startY;
+
+Script "OnEnter" ENTER
+{
+	startX = GetActorX (0);
+	startY = GetActorY (0);
+    ScriptCall("MapController", "UnlockDoors");
+}
+
+Script "UnlockAndOpenDoor" (int lineId)
+{
+	if (!CheckInventory("ZeldaKey") && !CheckInventory("ZeldaLionKey"))
+	{
+		terminate;
+	}
+	if (!CheckInventory("ZeldaLionKey"))
+	{
+		TakeInventory("ZeldaKey", 1);
+	}
+	ACS_NamedExecute("OpenDoor", 0, lineId, 0);
+    ScriptCall("MapController", "RegisterUnlock", lineId);
+}
+
+// Called by ZeldaSpawner
+Script "CloseDoor" (int lineId)
+{
+    SetLineBlocking(lineId, BLOCK_EVERYTHING);
+    SetLineTexture(lineId, SIDE_FRONT, TEXTURE_MIDDLE, closeDoorTexture);
+    SetLineTexture(lineId, SIDE_BACK, TEXTURE_MIDDLE, closeDoorTexture);
+	PlaySound(0, "zelda/door", CHAN_AUTO);
+}
+
+// Called by SpawnController and bomb door linedefs
+Script "OpenDoor" (int lineId, int isBombed, int isGrumbleWall)
+{
+    SetLineBlocking(lineId, BLOCK_NOTHING);
+    if (isGrumbleWall == 1)
+    {
+        terminate;
+    }
+	str doorTexture = isBombed > 0 ? openBombTexture : openDoorTexture;
+    SetLineTexture(lineId, SIDE_FRONT, TEXTURE_MIDDLE, doorTexture);
+    SetLineTexture(lineId, SIDE_BACK, TEXTURE_MIDDLE, doorTexture);
+
+    if (isBombed == false)
+    {
+        PlaySound(0, "zelda/door", CHAN_7);
+    }
+    else
+    {
+        PlaySound(0, "misc/secret", CHAN_7);
+    }
+}
+
+// Used by whistle and wallmasters
+Script "TeleportToStart" (void)
+{
+	SetActorPosition(0, startX, startY, GetActorZ(0), 0);
+}
+
+// Pushed block reveals a stair.
+Script "RevealStairs" (int linedefId, int sectorId, int triggerSectorId)
+{
+	PlaySound(0, "misc/secret", CHAN_AUTO);
+
+    if (sectorId != 0 && GetSectorFloorZ(sectorId, 0, 0) > -8)
+    {
+        Floor_RaiseByValue(sectorId, 10, -8);
+        ChangeFloor(sectorId, stairTexture);
+    }
+
+    if (triggerSectorId != 0  && GetSectorFloorZ(triggerSectorId, 0, 0) > 0)
+    {
+        Floor_RaiseByValue(triggerSectorId, 10, -64);
+        SetSectorDamage(triggerSectorId, 0, "None");
+    }
+
+    SetLineBlocking(linedefId, BLOCK_NOTHING);
+}
+
+// Pushed block opens a door.
+Script "RevealDoor" (int from, int to, int doorId)
+{
+	PlaySound(0, "misc/secret", CHAN_AUTO);
+
+	// From
+	if (from > 0)
+	{
+		ChangeFloor(from, floorTexture);
+		Floor_RaiseByValue(from, 100, -64);
+	}
+
+	// To
+	if (to > 0)
+	{
+		ChangeFloor(to, floorTexture);
+		Floor_RaiseByValue(to, 100, 64);
+	}
+
+	// Unlock door
+	SetLineBlocking(doorId, BLOCK_NOTHING);
+    SetLineTexture(doorId, SIDE_FRONT, TEXTURE_MIDDLE, openDoorTexture);
+    SetLineTexture(doorId, SIDE_BACK, TEXTURE_MIDDLE, openDoorTexture);
+}
+
+// Called by Meat when placed next to grumble moblin
+Script "GrumbleGrumble" (int lineId)
+{
+    if (CheckInventory("ZeldaMeat"))
+    {
+    	SetLineBlocking(lineId, BLOCK_NOTHING);
+		TakeInventory("ZeldaMeat", 1);
+    	PlaySound(0, "misc/secret", CHAN_AUTO);
+        ScriptCall("MapController", "RegisterMoblinFed");
+    }
+}
+
+Script "Endgame" (void)
+{
+    Delay(100);
+    Exit_Normal(0);
+}
