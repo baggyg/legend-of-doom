@@ -1,37 +1,240 @@
-/****************************************************
-*
-*   Credits
-*
-****************************************************/
+The Legend of Doom
+===
 
-Conversion and code by DeTwelve
+https://youtube.com/DeTwelveGames
+
+https://twitter.com/DeTwelveGames
 
 https://ko-fi.com/detwelve
 
-Nintendo - for making the original Legend of Zelda
 
-The original LoZ isn't directly available for purchase, but is accessible on the Switch via Nintendo Online.
+### About
 
-https://www.zelda.com/
+This conversion aims to faithfully bring the original NES land of Hyrule to life in the GZDoom engine.
 
-id - for DOOM and everything they have done for the mod community and gaming in general.
+The DOOM and Zelda games have been huge sources of influence and inspiration for me personally. Now adays I find the fandoms and creator communities that have grown up with these franchises equally inspiring. I have long held dreams to see this world realized in 3D and to create a DOOM mod. This is my first project and I had a great time learning ZScript and the basics of how to develop something for the GZDoom engine.
 
-https://bethesda.net/en/game/doom
+Thank you to everyone who contributes to this community with your code, art, effort, and encouragement.
 
 
-/****************************************************
-*
-*   Modders and helpful people
-*
-****************************************************/
+### Other Project Inspirations
+
+This project gratefully uses assets and inspiration from the following projects, with permission from the project owners:
+
+[Zelda 1 Redux](https://www.romhacking.net/forum/index.php?topic=29403.0) by [ShadowOne333](https://www.romhacking.net/forum/index.php?action=profile;u=14879)
+
+[Zelda TC](https://www.moddb.com/mods/zelda-tc) by [Exkodius](https://www.moddb.com/members/exkodius)
+
+[NES Maps](https://nesmaps.com/maps/Zelda/Zelda.html) by [GameMaps](https://www.patreon.com/gamemaps)
+
+
+### Notes, Differences, and Known Issues
+
+- Weapons are single wielded so you can't use the boomerang and sword at the same time for example.
+
+- The "F1" help screen for dungeons will bring up complete dungeon maps provided with permission by nesmaps.com. Unfortunately the overworld map is huge with an super wide aspect ratio and I so far haven't found how to make it fit/scale in a way that makes it legible.
+
+- Heart health display shows in quarter units. The actual values you receive match the original, but now if you have the silver or red ring you will start to see quarter hearts. In the original those hits would register behind the scenes and the heart graphic in the HUD would change on the 2nd hit.
+
+- You can use the bow and arrow immediately upon picking up the Bow. No need to buy arrows separately from the store.
+
+- A couple of sounds are different or not from the NES Zelda.
+
+- The skybox art is an unused asset from Wind Waker.
+
+- Monster art. There are some pretty obvious limitations that come along with using the original assets. While it works surprisingly well to use the front, side, and back views only, having the diagonal views would be ideal. My art skills aren't up to creating those. Voxel models would be another alternative, but is probably outside the scope of what I'm willing to commit to creating.
+
+- Weapon art. Same situation as the monsters. I tried to do a sword and wand that look a bit more like their 8-bit counterparts, but it turned out awful. I'd be willing to accept any contributions if someone feels like they can make quality versions that more closely resemble the originals.
+
+
+### Requirements
+
+The latest version of GZDoom 4.7.1
+
+Should work with any DOOM iWad including FreeDoom.
+
+
+### Recommended Settings
+
+Display Options -> Texture Options -> Texture Filter mode: None
+
+With texture filtering on, everything looks super blurry.
+
+Automap Options -> Enable textured display: Yes
+
+The textured automap is pretty cool with this mod, especially in the overworld.
+
+It is unlikely that this will work well with other mods.
+
+
+### Change Log
+
+2021-1-30 v1.1.0:
+
+General
+
+- Many new sprites and textures from [ShadowOne333](https://www.romhacking.net/forum/index.php?action=profile;u=14879)'s [Zelda 1 Redux](https://www.romhacking.net/forum/index.php?topic=29403.0) ROM hack
+
+- New fonts by [Exkodius](https://www.moddb.com/members/exkodius)
+
+- Some new translations from the [Legends of Localization](https://legendsoflocalization.com/the-legend-of-zelda/first-quest) project.
+
+- Item display moved to the Pause screen making the automap more usable. Leverages new DrawPaused method introduced in GZDoom 4.7.1.
+
+- Added the BRIGHT modifer to rupee sprites so they are easier to see in the black dungeon rooms.
+
+- Rupee count increased to 999
+
+- Fairy drops now wander around
+
+- Implement missing loot logic to force specific drops on the 11th and 16th consecutive kill without being hit
+
+- Teleport fog and enemy projectiles are no longer affected by time freeze
+
+- Spawn logic has been improved to eliminate things like occasional Octorocks in the water or a monster stuck to the wall.
+
+- Menu improvements
+
+
+Weapons
+
+- Boomerang has been changed from a selectable weapon to the alt-fire for all weapons except Bow
+
+- Sword reach extended about 20%
+
+- Sword speed increased
+
+- Sword projectiles will now expire after traveling roughly one "screen" length
+
+- Bomb explosion radius doubled
+
+- Initial bomb limit increased to 10
+
+- Blue boomerang distance extended
+
+- No longer auto switch to Bomb or Bow when new ammo is picked up after reaching 0 (this was a pain particularly when using the bow with near 0 rupees). Leverages the WEAPON.NOAUTOSWITCHTO flag made available in GZDoom 4.7.0.
+
+- Shield is now a spawned actor which should result in a more natural feeling block and decouples it from the HUD.
+
+- Shield no longer works when Bow is equiped
+
+- The Big Shield graphics changed to the Hylian Shield graphics. This provides a better visual distinction between the "small" and "big" shields when viewed from a 1st person perspective.
+
+- Candle fire distance traveled increased by 30%
+
+- Fix blue candle de/select animations not maintaining their no-flame state
+
+
+Overworld
+
+- Major mapping changes include new geometry to open the world up a bit and hopefully take care of some glitches I've seen reported
+
+- Bomb walls will now only trigger when hit by bombs
+
+- Overworld will now remember bombed walls and burned bushes
+
+- Bomb wall and secret bush textures are now slightly differentiated (thanks to the sprite makeover from Zelda 1 Redux!)
+
+- Ghosts in the graveyard now behave like in the original game where there is a lead ghost and killing them will kill the others
+
+- Add road signs to warp rooms
+
+- Increased brightness of cave exit light
+
+- Price textures have been cleaned up
+
+
+Dungeons
+
+- Bomb walls will now only trigger when hit by bombs
+
+- Triforce rooms have been redesigned. I hope this isn't too controversial. The triforce rooms that were approached from the side were awkward and I observed players and myself not knowing which direction to turn. The goal here was to make the triforce visible from the moment you can see into the room, which is more consisent to the original's intent, I think.
+
+- Spike Traps now play the sound effect from Ocarina of Time when they move
+
+- Fix bug where Spike Traps would disappear if they hit a Wizzrobe in ghost state
+
+- Balance changes for Wizzrobe. Nerfed by increasing the vulnerable time before and after they fire. Blue wizzrobes got a buff though - previously they were firing the weaker version of the wand projectile by mistake.
+
+- Fix bug where wizzrobe projectile was spawning fire after the player picked up Book.
+
+- Make snake monsters easier to hit
+
+- Increase Lanmola health
+
+- Add brightmaps to many monster's eyes so they show up in dark rooms
+
+- Fix Manhandla floating away when bombed
+
+- Fix Princess Zelda not changing dress color if you picked up the Red Ring
+
+
+2021-10-18 v1.0.3:
+
+- Improve Blue Candle so that it is easy to tell when it can be used again after firing.
+
+- Fix bug where monster corpse would damage player during time stop.
+
+- Darknut no longer shoots swords projectile.
+
+- Peahat now flashes like other monsters when damaged.
+
+- Replace grunt/oof sound that comes from players falling or use fail.
+
+- Fix various spawners that might have closed a door too soon if approached slowly.
+
+- Fix level 9 room crash (middle sand room with Patra).
+
+- Fix the one spike trap in level 9 that would not move after stairs are revealed.
+
+- Add pickup sound to Lion Key.
+
+- Fix issue where shield disapears and Doomguy would make a weird face if you tried to use a weapon prior to picking up the wooden sword or when affected by Bubble.
+
+2021-10-7 v1.0.2:
+
+- Fix Gleeok sub-boss in Level 6. Gleeok had about a 50/50 chance to spawn outside the map.
+
+- Fix money game doors. The one next to start worked and the others would only work if you visited the start one first.
+
+- Stalfos no longer shoots swords. Stalfos only do this in the 2nd quest.
+
+- Fix a broken stair leading to level 6.
+
+- Add Legend of Doom start title
+
+2021-10-4 v1.0.1:
+
+-  Fix Level 4. The initial release had a bugged ladder pickup that wouldn't let you go over water after picking up, making level 4 impossible to complete. If you're in this state, you can still go on to the overworld and later levels, the bug only affects the level 4 dungeon itself.
+
+- Brightness has been increased in treasure rooms, caves, and dungeon areas between rooms. Is it still too dark?
+
+- Lower Aquamentus trigger distance to prevent potentially getting stuck in the door.
+
+- Fix block in level 1 that could be pushed multiple times.
+
+- Add a couple of missing pickup messages
+
+- Fix exit for shop near the SE shore.
+
+2021-10-2 v1.0.0:
+
+- Initial release
+
+
+### Acknowledgements
 
 Exkodius - for his inspirational work, kindly letting me use the Octorock sprites from Zelda TC, and helpful suggestions on menu improvements.
 
-Zoskiacu - for their work on Legend of Zeldoom. This helped inform decisions surrounding world scale.
+[ShadowOne333](https://www.romhacking.net/forum/index.php?action=profile;u=14879) - for permission to incorporate the sprites and quality of life improvements from the Zelda 1 Redux ROM hack.
 
-Kizoky - for allowing me to use his Eater of Worlds code for Moldorm and Lanmola.
+kalensar - for a lot of feedback, encourgement, and some code to get me on my way improving the shield mechanics.
+
+Kizoky - for posting and allowing me to use their Eater of Worlds code for Moldorm and Lanmola.
 
 Dude27th - for testing and helpful suggestions.
+
+Zoskiacu - for their work on Legend of Zeldoom. This helped inform decisions surrounding world scale.
 
 Amuscaria,XaserAcheron - for the sword and shield assets
 
@@ -45,76 +248,10 @@ Apeirogon - for contributing a solution to getting sector tags on the zdoom foru
 
 Jarewill - for posting boomerange projectile example on the forums.
 
-/****************************************************
-*
-*   Weapons Art
-*
-*   NOTES:
-*   Sword hilts were recolored and projectiles added.
-*
-****************************************************/
+[Dante Augustus Scarlatti](https://dasdrones.org/) - for editing the trailer.
 
-Art By: Amuscaria
-Eriguns Mod By: XaserAcheron
-Source:
-https://forum.zdoom.org/viewtopic.php?f=43&t=48208&hilit=eriguns2
-https://github.com/XaserAcheron/eriguns/tree/master/eriguns2/sprites/weapons/templarsword
+[FalKKonE](https://www.falkkone.com/) - for permission to use their music in the trailer.
 
-*Bow as Bow and Arrow*
+[nesmaps](https://nesmaps.com/) - for permission to use thier maps as the F1 help screens.
 
-Submitted: Gothic
-Decorate: Gothic
-GLDefs: Gothic
-Sprites: Bethesda Softworks, Raven Software, Monolith Productions, DonaldDuck
-Sprite Edit: Gothic
-Sounds: Raven Software
-
-*Fire crystal*
-
-Submitted: Evil Space Tomato
-Decorate: Evil Space Tomato
-GLDefs: Evil Space Tomato
-Sounds: Heretic Edited by Evil Space Tomato
-Sprites: neoworm http://forum.zdoom.org/viewtopic.php?f=37&t=15908
-Sprite Edit: Evil Space Tomato
-
-*Magic Shield*
-
-Art from
-https://forum.zdoom.org/viewtopic.php?f=43&t=68869&p=1154715&hilit=wooden+shield+sprite#p1154715
-
-
-/****************************************************
-*
-*   Legend of Zelda
-*
-****************************************************/
-SoundFx
-http://noproblo.dayjo.org/ZeldaSounds/
-
-Character and item sprites ripped by Mister Mike
-https://www.spriters-resource.com/nes/legendofzelda
-
-Reference Maps
-https://nesmaps.com/maps/Zelda/Zelda.html
-
-Other references
-https://www.zeldadungeon.net/
-
-Skybox texture:
-https://new.tcrf.net/The_Legend_of_Zelda:_The_Wind_Waker/Unused_Models#Tincle
-
-
-/****************************************************
-*
-*   Tools
-*
-****************************************************/
-
-*Ultimate Doom Builder*
-https://github.com/jewalky/UltimateDoomBuilder
-
-*ZScript VSCode extension*
-https://github.com/KaptainMicila/ZScript-VSCode
-
-*Adobe Photoshop*
+GZDoom Discord - thanks to everyone who frequents the scripting channels on Discord. Though I didn't get into too many conversations, it's incredibly helpful starting out just to follow along.
