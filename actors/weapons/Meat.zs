@@ -9,6 +9,7 @@ class ZeldaMeat : ZeldaWeapon
         Weapon.SlotNumber 9;
         Inventory.MaxAmount 1;
         Inventory.PickupMessage "You picked up meat!";
+        +WEAPON.TWOHANDED
     }
 
     States

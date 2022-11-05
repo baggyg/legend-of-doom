@@ -15,6 +15,7 @@ class FireCrystal : ZeldaWeapon
         Weapon.YAdjust 0;
         Inventory.PickupMessage "You got the wand!";
         -BLOODSPLATTER
+        +WEAPON.TWOHANDED
     }
 
   States

@@ -35,13 +35,15 @@ class ZeldaWeapon : Weapon abstract
 
                 if (!player) return;
 
+                int alflags = invoker.bOffhandWeapon ? ALF_ISOFFHAND : 0;
+
                 if (player.CountInv("BoomerangBlue") >= 1)
                 {
-                    invoker.spawned = SpawnPlayerMissile("BoomerangProjBlue");
+                    invoker.spawned = SpawnPlayerMissile("BoomerangProjBlue", aimflags: alflags);
                 }
                 else if (player.CountInv("Boomerang") >= 1)
                 {
-                    invoker.spawned = SpawnPlayerMissile("BoomerangProj");
+                    invoker.spawned = SpawnPlayerMissile("BoomerangProj", aimflags: alflags);
                 }
             }
             Goto Ready;
@@ -58,13 +60,16 @@ class ZeldaWeapon : Weapon abstract
         A_SpawnItemEx("SHEELD", 30, 0, 15, flags: SXF_SETTARGET);
 
         // Draw shield overlay when weapon is not firing.
-        let player = players[consoleplayer].mo;
-        if (!player) return;
+        if (player == null)
+        {
+            return;
+        }
 
-        let wep = players[consoleplayer].ReadyWeapon;
+        let wep = invoker == player.OffhandWeapon ? player.OffhandWeapon : player.ReadyWeapon;
         if (!wep) return;
+        let psplayer = wep.bOffhandWeapon ? PSP_OFFHANDWEAPON : PSP_WEAPON;
 
-        let psp = players[consoleplayer].GetPSprite(PSP_WEAPON);
+        let psp = players[consoleplayer].GetPSprite(psplayer);
 
         let isReady =
             players[consoleplayer].AttackDown == false ||

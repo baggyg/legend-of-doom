@@ -8,6 +8,7 @@ class ZeldaPotion : Weapon
 		Weapon.AmmoType "PotAmmo";
         Weapon.SlotNumber 8;
 		Inventory.Pickupmessage "Picked up a potion!";
+        +WEAPON.TWOHANDED
 	}
 
     States

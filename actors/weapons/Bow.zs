@@ -10,6 +10,7 @@ class Bow : Weapon
         Inventory.PickUpMessage "You got a bow!";
         +WEAPON.NOALERT
         +WEAPON.NOAUTOSWITCHTO
+        +WEAPON.TWOHANDED
     }
 
     States

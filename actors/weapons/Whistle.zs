@@ -8,6 +8,7 @@ class ZeldaWhistle : ZeldaWeapon
         Weapon.SlotNumber 7;
 		Weapon.AmmoUse 0;
         Scale 0.5;
+        +WEAPON.TWOHANDED
     }
 
     States

@@ -15,6 +15,7 @@ class ZeldaSwordWood : ZeldaSword
 		Inventory.PickupMessage "You got the wooden sword!";
         ZeldaSword.SwordProjectile "ZeldaSwordMissleWood";
 		Tag "$TAG_WOODSWORD";
+		+WEAPON.TWOHANDED
 	}
 
 	States
@@ -233,6 +234,8 @@ class ZeldaSword : ZeldaWeapon abstract
 	{
         if (player == null) return;
 
+		int alflags = invoker.bOffhandWeapon ? ALF_ISOFFHAND : 0;
+
 		A_WeaponOffset(offsetX, offsetY);
 
 		if (invoker.SpawnedSword || player.Health < player.mo.GetMaxHealth())
@@ -241,7 +244,7 @@ class ZeldaSword : ZeldaWeapon abstract
 		}
 		else
 		{
-			invoker.SpawnedSword = SpawnPlayerMissile (missleClass);
+			invoker.SpawnedSword = SpawnPlayerMissile (missleClass, aimflags: alflags);
 		}
 	}
 }

@@ -9,6 +9,7 @@ class CandleRed : ZeldaWeapon
         DamageType "Fire";
 		Inventory.Pickupmessage "You got the red candle!";
         +WEAPON.NO_AUTO_SWITCH
+        +WEAPON.TWOHANDED
     }
 
     States

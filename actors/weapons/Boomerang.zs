@@ -67,7 +67,8 @@ class BoomerangBlue : Boomerang
                 // Boomerang projectiles are spawned by ZeldaWeapon if
                 // the Boomerang item is in the player's inventory.
                 if (invoker.spawned) return;
-                invoker.spawned = SpawnPlayerMissile("BoomerangProjBlue");
+                int alflags = invoker.bOffhandWeapon ? ALF_ISOFFHAND : 0;
+                invoker.spawned = SpawnPlayerMissile("BoomerangProjBlue", aimflags: alflags);
             }
             Goto ReadyNoShow;
         Select:
